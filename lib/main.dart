@@ -518,7 +518,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:put_method/second_page.dart';
-// import 'package:overlay_support/overlay_support.dart';
+//import 'package:overlay_support/overlay_support.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -530,6 +530,23 @@ void main(){
   runApp(const MaterialApp(home: MyApp()));
 }
 
+Route _createRoute(String word,int index,String ip,Gradient g1) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => Button(word, index, ip, g1,),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(0.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.slowMiddle;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
+}
 
 
 class MyApp extends StatefulWidget {
@@ -862,16 +879,12 @@ class _FirstPageListContainersState extends State<FirstPageListContainers> {
                   // print(name[index].toString());
                   // print(index);
                   // print(ipAddress);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => Button(
-                            name[index].toString(),
-                            index,
-                            ipAddress,
-                            g1,
-                          ))
-                  );
+                  Navigator.of(context).push(_createRoute(name[index].toString(), index, ipAddress, g1,));
+                  // Navigator.push(
+                  //     context,
+                  //     MaterialPageRoute(
+                  //         builder: (context) => Button(name[index].toString(), index, ipAddress, g1,))
+                  // );
                 },
                 child: Padding(
                   padding: EdgeInsets.symmetric(vertical: 10.0),
