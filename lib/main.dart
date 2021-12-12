@@ -525,12 +525,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 //method completed
 //on 11-dec-2021
+//implemented on main app -clone_smart_app on 12.12.2021 and zip is uploaded on parthosh drive
 
 void main(){
   runApp(const MaterialApp(home: MyApp()));
 }
 
-Route _createRoute(String word,int index,String ip,Gradient g1) {
+Route _createRoute(String word,int index,String ip,Gradient g1){
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => Button(word, index, ip, g1,),
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -563,7 +564,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
+    //final width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -696,7 +697,6 @@ class _FirstPageListContainersState extends State<FirstPageListContainers> {
     }else{
       initial();
     }
-
   }
 
   Future<void> initial() async {
@@ -708,7 +708,8 @@ class _FirstPageListContainersState extends State<FirstPageListContainers> {
       // fireData();
     }else if((data == null) || (data.length == 0)){
       //print("sucker!!!!!!!!!!!!!!!!!!!!");
-      if (ipAddress.toString() != 'false') {
+      if (ipAddress.toString() != 'false')
+      {
         //print("im inside the else if of initial **************");
         final response = await http.get(Uri.parse("http://$ipAddress/",));
         var fetchdata = jsonDecode(response.body);
@@ -725,8 +726,8 @@ class _FirstPageListContainersState extends State<FirstPageListContainers> {
           //print("im local in if loop data in list $localDataVal");
           loginData.setStringList('dataValues', localDataVal);
           initial();
-          // print(data);
-        });
+          //print(data);
+          });
       }
     } else {
       //print("im going into the getName of list in initial ");
